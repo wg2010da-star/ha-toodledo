@@ -82,8 +82,13 @@ class ToodledoClient:
             raise ToodledoError(f"Unexpected task response: {result}")
         return [item for item in result if isinstance(item, dict) and "id" in item]
 
-    async def add_task(self, title: str, due: int | None = None, note: str | None = None) -> str:
+    async def add_task(
+        self, title: str, due: int | None = None, note: str | None = None,
+        starred: bool = False,
+    ) -> str:
         task: dict[str, Any] = {"title": title}
+        if starred:
+            task["star"] = 1
         if due is not None:
             task["duedate"] = due
         if note:
