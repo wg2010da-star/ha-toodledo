@@ -1,11 +1,12 @@
 {
   "domain": "toodledo",
   "name": "Toodledo",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "documentation": "https://github.com/wg2010da-star/ha-toodledo",
   "issue_tracker": "https://github.com/wg2010da-star/ha-toodledo/issues",
   "codeowners": [],
   "config_flow": true,
+  "dependencies": ["auth"],
   "iot_class": "cloud_polling",
   "requirements": []
 }
