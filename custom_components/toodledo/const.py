@@ -1,0 +1,11 @@
+"""Constants for the Toodledo integration."""
+DOMAIN = "toodledo"
+CONF_CLIENT_ID = "client_id"
+CONF_CLIENT_SECRET = "client_secret"
+CONF_REFRESH_TOKEN = "refresh_token"
+CONF_ACCESS_TOKEN = "access_token"
+CONF_EXPIRES_AT = "expires_at"
+PLATFORMS = ["todo"]
+API_BASE = "https://api.toodledo.com/3"
+AUTH_URL = f"{API_BASE}/account/authorize.php"
+TOKEN_URL = f"{API_BASE}/account/token.php"
