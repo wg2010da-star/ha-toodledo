@@ -1,7 +1,7 @@
 {
   "domain": "toodledo",
   "name": "Toodledo",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "documentation": "https://github.com/wg2010da-star/ha-toodledo",
   "issue_tracker": "https://github.com/wg2010da-star/ha-toodledo/issues",
   "codeowners": [],
