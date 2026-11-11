@@ -18,7 +18,11 @@ _LOGGER = logging.getLogger(__name__)
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry,
                             async_add_entities: AddEntitiesCallback) -> None:
-    async_add_entities([ToodledoTodoEntity(hass.data[DOMAIN][entry.entry_id])])
+    coordinator = hass.data[DOMAIN][entry.entry_id]
+    async_add_entities([
+        ToodledoTodoEntity(coordinator),
+        ToodledoTodoEntity(coordinator, starred_only=True),
+    ])
 
 
 class ToodledoTodoEntity(CoordinatorEntity, TodoListEntity):
@@ -33,14 +37,19 @@ class ToodledoTodoEntity(CoordinatorEntity, TodoListEntity):
         | TodoListEntityFeature.SET_DESCRIPTION_ON_ITEM
     )
 
-    def __init__(self, coordinator):
+    def __init__(self, coordinator, starred_only: bool = False):
         super().__init__(coordinator)
-        self._attr_unique_id = f"{coordinator.entry.entry_id}_tasks"
+        self._starred_only = starred_only
+        self._attr_name = "Starred tasks" if starred_only else "Tasks"
+        suffix = "starred_tasks" if starred_only else "tasks"
+        self._attr_unique_id = f"{coordinator.entry.entry_id}_{suffix}"
 
     @property
     def todo_items(self):
         items = []
         for task in (self.coordinator.data or []):
+            if self._starred_only and str(task.get("star", "0")).lower() not in ("1", "true", "yes"):
+                continue
             due = None
             if task.get("duedate"):
                 try:
@@ -59,7 +68,9 @@ class ToodledoTodoEntity(CoordinatorEntity, TodoListEntity):
 
     async def async_create_todo_item(self, item: TodoItem) -> None:
         due = int(datetime.combine(item.due, datetime.min.time(), timezone.utc).timestamp()) if item.due else None
-        await self.coordinator.client.add_task(item.summary or "", due, item.description)
+        await self.coordinator.client.add_task(
+            item.summary or "", due, item.description, starred=self._starred_only
+        )
         await self.coordinator.async_request_refresh()
 
     async def async_update_todo_item(self, item: TodoItem) -> None:
