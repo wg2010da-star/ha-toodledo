@@ -1,6 +1,6 @@
 # Toodledo for Home Assistant
 
-Experimental custom integration that exposes your Toodledo tasks as a native Home Assistant To-do list.
+Experimental custom integration that exposes Toodledo tasks as a native Home Assistant To-do list.
 
 ## Features
 - Read open and completed Toodledo tasks
@@ -8,33 +8,33 @@ Experimental custom integration that exposes your Toodledo tasks as a native Hom
 - Edit titles, due dates and descriptions
 - Mark tasks completed / reopen them
 - Delete tasks
-- OAuth 2.0 access and automatic refresh-token renewal
+- OAuth 2.0 authorization using Home Assistant's built-in callback handler
+- Automatic access-token refresh
 
-## Install with HACS
-1. Open **HACS → Integrations → ⋮ → Custom repositories**.
-2. Add `https://github.com/wg2010da-star/ha-toodledo` with category **Integration**.
-3. Find **Toodledo** in HACS and install it.
-4. Restart Home Assistant.
-5. Go to **Settings → Devices & services → Add integration → Toodledo**.
+## Install from the Home Assistant Marketplace
+1. Open the Marketplace and add `https://github.com/wg2010da-star/ha-toodledo` as a custom repository, category **Integration**.
+2. Install **Toodledo** and restart Home Assistant.
+3. Open **Settings → Devices & services → Add integration → Toodledo**.
 
 ## Toodledo app setup
-Register an API app at Toodledo and set its Redirect URI to exactly `http://localhost`.
-Keep the Client Secret private. Enter it only in the Home Assistant setup form.
+Register an API app at Toodledo. Its Redirect URI must exactly match the callback URI Home Assistant uses.
 
-During setup, Home Assistant displays an authorization URL:
-1. Open that URL in a browser and approve access.
-2. Toodledo redirects to `http://localhost/?code=...&state=...`. The page itself may fail to load; that is okay if the address bar contains the query parameters.
-3. Copy the **entire address** from the browser address bar and paste it into the next Home Assistant form.
+For the local address `http://homeassistant:8132`, this is normally:
 
-If your browser does not show a `code` and `state` in the address bar, stop and report what happened; do not share your Client Secret.
+```
+http://homeassistant:8132/auth/external/callback
+```
+
+If Home Assistant displays a different redirect URI in the generated authorization link (for example when the My Home Assistant redirect is enabled), register that exact URI instead. Do not use `http://localhost` for a Home Assistant server running on another device.
+
+Keep the Client Secret private. Enter it only in the Home Assistant setup form. The integration requests `basic tasks write` permissions.
 
 ## Notes
-- The integration requests `basic tasks write` permissions.
 - The default polling interval is 15 minutes. It can be changed in the integration options (5–60 minutes).
-- Toodledo API v3 access tokens expire after two hours; refresh tokens are rotated by Toodledo and saved by Home Assistant.
-- This is an initial experimental release. It has not yet been tested against your account or hardware. Back up Home Assistant before testing, and report issues in the repository.
+- Toodledo API v3 access tokens expire after two hours; refresh tokens are renewed by Toodledo and saved by Home Assistant.
+- This is an experimental release. It has not yet been tested against your account or hardware. Back up Home Assistant before testing.
 
 ## References
 - [Toodledo API v3 authentication](https://api.toodledo.com/3/account/index.php)
 - [Toodledo API v3 tasks](https://api.toodledo.com/3/tasks/index.php)
-- [Home Assistant To-do entity developer docs](https://developers.home-assistant.io/docs/core/entity/todo/)
+- [Home Assistant OAuth 2.0 integration documentation](https://developers.home-assistant.io/docs/core/integration/config_flow/#configuration-via-oauth2)
