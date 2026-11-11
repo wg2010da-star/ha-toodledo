@@ -42,6 +42,7 @@ class ToodledoOAuthImplementation(config_entry_oauth2_flow.LocalOAuth2Implementa
             {
                 "grant_type": "authorization_code",
                 "code": external_data["code"],
+                "redirect_uri": external_data["state"]["redirect_uri"],
                 "vers": "3",
                 "device": "Home Assistant",
                 "f": "json",
