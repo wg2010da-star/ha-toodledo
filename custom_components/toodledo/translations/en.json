@@ -1,0 +1,20 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect Toodledo",
+        "description": "Enter the Client ID and Client Secret for your Toodledo app."
+      },
+      "authorize": {
+        "title": "Authorize Toodledo",
+        "description": "1. Open this address in a browser and grant Home Assistant access:\\n{auth_url}\\n\\n2. After the redirect to localhost, paste the full address from the browser address bar here."
+      }
+    },
+    "error": {
+      "authorization_denied": "Authorization was denied.",
+      "missing_code": "No authorization code was found in the redirect URL.",
+      "state_mismatch": "The state value does not match. Restart setup.",
+      "token_exchange": "The authorization code could not be exchanged for tokens."
+    }
+  }
+}
