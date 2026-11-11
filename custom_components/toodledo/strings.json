@@ -4,17 +4,10 @@
       "user": {
         "title": "Toodledo verbinden",
         "description": "Trage die Client ID und das Client Secret deiner Toodledo-App ein."
-      },
-      "authorize": {
-        "title": "Toodledo autorisieren",
-        "description": "1. Öffne diese Adresse im Browser und erlaube Home Assistant den Zugriff:\\n{auth_url}\\n\\n2. Nach der Weiterleitung auf localhost kopiere die vollständige Adresse aus der Browser-Adresszeile hier hinein."
       }
     },
     "error": {
-      "authorization_denied": "Autorisierung wurde abgelehnt.",
-      "missing_code": "In der Weiterleitungsadresse wurde kein Code gefunden.",
-      "state_mismatch": "Der Sicherheitswert (state) stimmt nicht überein. Bitte starte die Einrichtung erneut.",
-      "token_exchange": "Der Code konnte nicht gegen Zugriffstoken getauscht werden."
+      "missing_credentials": "Bitte gib sowohl Client ID als auch Client Secret ein."
     }
   }
 }
